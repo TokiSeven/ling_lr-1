@@ -8,7 +8,5 @@ Create a program for the construction of the right- and left- sided grammar for 
  - Download or clone this repository
  - Write and press Enter in console: npm install
  - Write and press two things in console:
-  - npm start
-   - started webpack, so you can edit files
-  - node index.js
-   - started express server, so you can watch website here: http://localhost:3000/
+  - npm start `(started webpack, so you can edit files)`
+  - node index.js `(started express server, so you can watch website here: http://localhost:3000/)`
