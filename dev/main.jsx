@@ -4,7 +4,7 @@ import {Grid, Row, Col} from 'react-bootstrap';
 
 import Task1 from './task-1/';
 import Task2 from './task-2/';
-// import Task3 from './task-3/';
+import Task3 from './task-3/';
 
 class Page extends React.Component{
     constructor(props){
@@ -34,6 +34,8 @@ class Page extends React.Component{
                 <Task1 />
                 <hr />
                 <Task2 />
+                <hr />
+                <Task3 />
             </Grid>
         );
     }

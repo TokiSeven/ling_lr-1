@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
 
-export default class Task1 extends React.Component{
+export default class Task2 extends React.Component{
     constructor(props){
         super(props);
         this.state = {

@@ -66,6 +66,10 @@
 
 	var _task4 = _interopRequireDefault(_task3);
 
+	var _task5 = __webpack_require__(431);
+
+	var _task6 = _interopRequireDefault(_task5);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -73,8 +77,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import Task3 from './task-3/';
 
 	var Page = function (_React$Component) {
 	    _inherits(Page, _React$Component);
@@ -125,7 +127,9 @@
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(_task2.default, null),
 	                _react2.default.createElement('hr', null),
-	                _react2.default.createElement(_task4.default, null)
+	                _react2.default.createElement(_task4.default, null),
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(_task6.default, null)
 	            );
 	        }
 	    }]);
@@ -39964,13 +39968,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Task1 = function (_React$Component) {
-	    _inherits(Task1, _React$Component);
+	var Task2 = function (_React$Component) {
+	    _inherits(Task2, _React$Component);
 
-	    function Task1(props) {
-	        _classCallCheck(this, Task1);
+	    function Task2(props) {
+	        _classCallCheck(this, Task2);
 
-	        var _this = _possibleConstructorReturn(this, (Task1.__proto__ || Object.getPrototypeOf(Task1)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Task2.__proto__ || Object.getPrototypeOf(Task2)).call(this, props));
 
 	        _this.state = {
 	            source: "",
@@ -39981,7 +39985,7 @@
 	        return _this;
 	    }
 
-	    _createClass(Task1, [{
+	    _createClass(Task2, [{
 	        key: 'changedHandler',
 	        value: function changedHandler(e) {
 	            var sourceValue = e.target.value;
@@ -40075,10 +40079,134 @@
 	        }
 	    }]);
 
-	    return Task1;
+	    return Task2;
 	}(_react2.default.Component);
 
-	exports.default = Task1;
+	exports.default = Task2;
+
+/***/ },
+/* 431 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Task3 = function (_React$Component) {
+	    _inherits(Task3, _React$Component);
+
+	    function Task3(props) {
+	        _classCallCheck(this, Task3);
+
+	        var _this = _possibleConstructorReturn(this, (Task3.__proto__ || Object.getPrototypeOf(Task3)).call(this, props));
+
+	        _this.state = {
+	            source: "",
+	            result: ""
+	        };
+	        _this.changedHandler = _this.changedHandler.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Task3, [{
+	        key: 'changedHandler',
+	        value: function changedHandler(e) {
+	            var value = e.target.value;
+	            var len = value.length;
+	            var res = "";
+
+	            var validations = {
+	                first: 'IJKLMNijklmn',
+	                other: '_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+	            };
+
+	            if (len > 9 || len < 1) {
+	                res = "Длина должна быть в пределе 1 -> 9 символов.";
+	            } else {
+	                var positionOfIncorrectSymbol = -1;
+	                for (var i = 0; i < len && positionOfIncorrectSymbol == -1; i++) {
+	                    var field = i == 0 ? "first" : "other";
+	                    if (validations[field].indexOf(value[i]) === -1) positionOfIncorrectSymbol = i;
+	                }
+	                if (positionOfIncorrectSymbol == -1) res = "Строка корректна";else res = "Строка некорректна на позиции " + positionOfIncorrectSymbol + " (начало с нуля). Некорректный символ: " + value[positionOfIncorrectSymbol] + ".";
+	            }
+	            this.setState({
+	                source: value,
+	                result: res
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var source = this.state.source.length > 0 ? this.state.source : "Нет входных данных";
+	            var result = this.state.result.length > 0 ? this.state.result : "Нет выходных данных";
+
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 12, sm: 12, className: 'text-center' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        '\u0417\u0430\u0434\u0430\u043D\u0438\u0435 3'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        '\u041F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u044F\u044E\u0442 \u0441\u043E\u0431\u043E\u0439 \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u044B \u0446\u0435\u043B\u043E\u0433\u043E \u0442\u0438\u043F\u0430 \u0432 \u0424\u043E\u0440\u0442\u0440\u0430\u043D\u0435, \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0449\u0438\u0435\u0441\u044F \u0441 I, J, K, L, M N.'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 6, sm: 6 },
+	                    _react2.default.createElement('input', { onChange: this.changedHandler, type: 'text', className: 'form-control' })
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 6, sm: 6 },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { className: 'list-group' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            source
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            result
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Task3;
+	}(_react2.default.Component);
+
+	exports.default = Task3;
 
 /***/ }
 /******/ ]);
