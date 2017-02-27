@@ -39480,6 +39480,10 @@
 
 	var _reactBootstrap = __webpack_require__(159);
 
+	var _Grammar = __webpack_require__(428);
+
+	var _Grammar2 = _interopRequireDefault(_Grammar);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39534,212 +39538,15 @@
 
 	        var _this2 = _possibleConstructorReturn(this, (Outputs.__proto__ || Object.getPrototypeOf(Outputs)).call(this, props));
 
-	        _this2.convertToAssociativeMassive = _this2.convertToAssociativeMassive.bind(_this2);
-	        _this2.getRightGrammar = _this2.getRightGrammar.bind(_this2);
-	        _this2.getLeftGrammar = _this2.getLeftGrammar.bind(_this2);
+	        _this2.Grammar = new _Grammar2.default();
 	        return _this2;
 	    }
 
 	    _createClass(Outputs, [{
-	        key: 'convertToAssociativeMassive',
-	        value: function convertToAssociativeMassive() {
-	            var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-	            var converted = [];
-	            arr.forEach(function (v) {
-	                // v[0] is name of terminal
-	                // v[1] is terminal for 0
-	                // v[2] is terminal for 1
-	                // v[3] set to 1 if it is end
-	                converted[v[0]] = {
-	                    0: v[1] != '' ? v[1] : null,
-	                    1: v[2] != '' ? v[2] : null,
-	                    'end': v[3] == '1' ? true : false
-	                };
-	            }, this);
-	            return converted;
-	        }
-	    }, {
-	        key: 'getRightGrammar',
-	        value: function getRightGrammar() {
-	            var _this3 = this;
-
-	            var arr = this.convertToAssociativeMassive(this.props.data);
-	            var errors = [];
-	            var results = [];
-
-	            var _loop = function _loop(key) {
-	                var row = arr[key];
-	                var countOfFreeTerminals = 2; // we can go only by 0 and 1
-	                var str = [];
-	                var ends = [];
-	                for (var i = 0; i < 2; i++) {
-	                    if (row[i] != null) {
-	                        if (row[i] in arr) {
-	                            // push current terminal
-	                            str.push([i, row[i]]);
-	                            // now count of free places for terminals should increase
-	                            countOfFreeTerminals--;
-	                            // it next terminal is end, i should push this end to current terminal
-	                            if (arr[row[i]]['end']) ends.push(i);
-	                        } else {
-	                            errors.push(_react2.default.createElement(
-	                                'span',
-	                                { style: { color: 'red' } },
-	                                '\u041D\u0435\u0442 ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    row[i]
-	                                ),
-	                                ' \u0441\u0440\u0435\u0434\u0438 \u043E\u043F\u0438\u0441\u0430\u043D\u043D\u044B\u0445.',
-	                                _react2.default.createElement('br', null),
-	                                '\u041E\u0448\u0438\u0431\u043A\u0430 \u0442\u0443\u0442: \u0442\u0435\u0440\u043C\u0438\u043D\u0430\u043B ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    key
-	                                ),
-	                                ' \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435 ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    i
-	                                )
-	                            ));
-	                        }
-	                    }
-	                }
-	                // if it is end row and there is empty terminal (only one)
-	                // we can push it number in array
-	                if (countOfFreeTerminals == 1 && row['end']) {
-	                    if (ends.indexOf(str[0][0]) == -1) ends.push(str[0][0]);
-	                }
-
-	                // convert all ends line to str structure
-	                ends.forEach(function (v) {
-	                    str.push(['', v]);
-	                }, _this3);
-
-	                // converts every elemtns ([number, terminal]) in str to string
-	                var strings = [];
-	                var _iteratorNormalCompletion = true;
-	                var _didIteratorError = false;
-	                var _iteratorError = undefined;
-
-	                try {
-	                    for (var _iterator = str[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                        var s = _step.value;
-
-	                        strings.push(s.join(""));
-	                    } // convert all array strings to string
-	                } catch (err) {
-	                    _didIteratorError = true;
-	                    _iteratorError = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion && _iterator.return) {
-	                            _iterator.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError) {
-	                            throw _iteratorError;
-	                        }
-	                    }
-	                }
-
-	                if (str.length > 0) results.push(key + "::=" + strings.join("|"));
-	            };
-
-	            for (var key in arr) {
-	                _loop(key);
-	            }
-	            return errors.length ? errors : results;
-	        }
-	    }, {
-	        key: 'getLeftGrammar',
-	        value: function getLeftGrammar() {
-	            var arr = this.convertToAssociativeMassive(this.props.data);
-	            var errors = [];
-	            var results = [];
-	            for (var key in arr) {
-	                var _row = arr[key];
-	                var _countOfFreeTerminals = 2;
-	                var _str = [];
-	                for (var i = 0; i < 2; i++) {
-	                    if (_row[i] != null) {
-	                        if (_row[i] in arr) {
-	                            _str.push([i, _row[i]]);
-	                            _countOfFreeTerminals--;
-	                            if (arr[_row[i]]['end']) {
-	                                _str.push(['', i]);
-	                            }
-	                        } else {
-	                            errors.push(_react2.default.createElement(
-	                                'span',
-	                                { style: { color: 'red' } },
-	                                '\u041D\u0435\u0442 ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    _row[i]
-	                                ),
-	                                ' \u0441\u0440\u0435\u0434\u0438 \u043E\u043F\u0438\u0441\u0430\u043D\u043D\u044B\u0445.',
-	                                _react2.default.createElement('br', null),
-	                                '\u041E\u0448\u0438\u0431\u043A\u0430 \u0442\u0443\u0442: \u0442\u0435\u0440\u043C\u0438\u043D\u0430\u043B ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    key
-	                                ),
-	                                ' \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435 ',
-	                                _react2.default.createElement(
-	                                    'b',
-	                                    null,
-	                                    i
-	                                )
-	                            ));
-	                        }
-	                    }
-	                }
-	                if (_countOfFreeTerminals == 1 && _row['end']) {
-	                    _str.push(['', _str[0][0]]);
-	                }
-	                var _strings = [];
-	                var _iteratorNormalCompletion2 = true;
-	                var _didIteratorError2 = false;
-	                var _iteratorError2 = undefined;
-
-	                try {
-	                    for (var _iterator2 = _str[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                        var s = _step2.value;
-
-	                        _strings.push(s.join(""));
-	                    }
-	                } catch (err) {
-	                    _didIteratorError2 = true;
-	                    _iteratorError2 = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                            _iterator2.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError2) {
-	                            throw _iteratorError2;
-	                        }
-	                    }
-	                }
-
-	                if (_str.length > 0) results.push(key + "::=" + _strings.join("|"));
-	            }
-	            return errors.length ? errors : results;
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var stringsRight = this.getRightGrammar();
-	            var stringsLeft = this.getLeftGrammar();
+	            var stringsRight = this.Grammar.getRight(this.props.data);
+	            var stringsLeft = this.Grammar.getLeft(this.props.data);
 
 	            return _react2.default.createElement(
 	                _reactBootstrap.Row,
@@ -39754,6 +39561,300 @@
 	}(_react2.default.Component);
 
 	exports.default = Outputs;
+
+/***/ },
+/* 428 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Grammar = function () {
+	    function Grammar() {
+	        _classCallCheck(this, Grammar);
+	    }
+
+	    _createClass(Grammar, [{
+	        key: 'getEndPoint',
+	        value: function getEndPoint(arr) {
+	            var endPoint = null;
+	            for (var key in arr) {
+	                // search endpoint in array
+	                if (arr[key]['end'] && key) {
+	                    endPoint = key;
+	                    break;
+	                }
+	            }return endPoint;
+	        }
+	    }, {
+	        key: 'getLastEndPoint',
+	        value: function getLastEndPoint(arr) {
+	            var endPoint = null;
+	            for (var key in arr) {
+	                // search endpoint in array
+	                if (arr[key]['end'] && key) {
+	                    endPoint = key;
+	                }
+	            }return endPoint;
+	        }
+	    }, {
+	        key: 'checkEndPointExists',
+	        value: function checkEndPointExists(arr) {
+	            return this.getEndPoint(arr) !== null;
+	        }
+	    }, {
+	        key: 'convertToAssociativeMassive',
+	        value: function convertToAssociativeMassive() {
+	            var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+	            var converted = [];
+	            arr.forEach(function (v) {
+	                // v[0] is state's name
+	                // v[1] is state for terminal 0
+	                // v[2] is state for terminal 1
+	                // v[3] set to 1 if it is an end
+	                converted[v[0]] = {
+	                    0: v[1] != '' ? v[1] : null,
+	                    1: v[2] != '' ? v[2] : null,
+	                    'end': v[3] == '1' ? true : false
+	                };
+	            }, this);
+	            return converted;
+	        }
+	    }, {
+	        key: 'getRight',
+	        value: function getRight(dataFromProps) {
+	            var _this = this;
+
+	            var arr = this.convertToAssociativeMassive(dataFromProps);
+	            var errors = [];
+	            var results = [];
+	            if (!this.checkEndPointExists(arr)) {
+	                errors.push(_react2.default.createElement(
+	                    'span',
+	                    { style: { color: "red" } },
+	                    '\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430 \u043A\u043E\u043D\u0435\u0447\u043D\u0430\u044F \u0442\u043E\u0447\u043A\u0430'
+	                ));
+	            } else {
+	                var _loop = function _loop(key) {
+	                    var row = arr[key];
+	                    var countOfFreeStates = 2; // we can go only by 0 and 1
+	                    var states = [];
+	                    var ends = [];
+	                    for (var i = 0; i < 2; i++) {
+	                        if (row[i] != null) {
+	                            if (row[i] in arr) {
+	                                // push current state
+	                                states.push([i, row[i]]);
+	                                // now count of free places for states should increase
+	                                countOfFreeStates--;
+	                                // if next state is end point, i should push this end to the current state
+	                                if (arr[row[i]]['end']) ends.push(i);
+	                            } else {
+	                                errors.push(_react2.default.createElement(
+	                                    'span',
+	                                    { style: { color: 'red' } },
+	                                    '\u041D\u0435\u0442 ',
+	                                    _react2.default.createElement(
+	                                        'b',
+	                                        null,
+	                                        row[i]
+	                                    ),
+	                                    ' \u0441\u0440\u0435\u0434\u0438 \u043E\u043F\u0438\u0441\u0430\u043D\u043D\u044B\u0445.',
+	                                    _react2.default.createElement('br', null),
+	                                    '\u041E\u0448\u0438\u0431\u043A\u0430 \u0442\u0443\u0442: \u0442\u0435\u0440\u043C\u0438\u043D\u0430\u043B ',
+	                                    _react2.default.createElement(
+	                                        'b',
+	                                        null,
+	                                        key
+	                                    ),
+	                                    ' \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435 ',
+	                                    _react2.default.createElement(
+	                                        'b',
+	                                        null,
+	                                        i
+	                                    )
+	                                ));
+	                            }
+	                        }
+	                    }
+	                    // if it is end row and there is empty states (only one)
+	                    // we can push it number in array
+	                    if (countOfFreeStates == 1 && row['end']) {
+	                        if (ends.indexOf(states[0][0]) == -1) ends.push(states[0][0]);
+	                    }
+
+	                    // convert all ends line to str structure
+	                    ends.forEach(function (v) {
+	                        states.push(['', v]);
+	                    }, _this);
+
+	                    // converts every elemnts ([number, terminal]) in states to string
+	                    var strings = [];
+	                    var _iteratorNormalCompletion = true;
+	                    var _didIteratorError = false;
+	                    var _iteratorError = undefined;
+
+	                    try {
+	                        for (var _iterator = states[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                            var s = _step.value;
+
+	                            strings.push(s.join(""));
+	                        } // convert all array states to string
+	                    } catch (err) {
+	                        _didIteratorError = true;
+	                        _iteratorError = err;
+	                    } finally {
+	                        try {
+	                            if (!_iteratorNormalCompletion && _iterator.return) {
+	                                _iterator.return();
+	                            }
+	                        } finally {
+	                            if (_didIteratorError) {
+	                                throw _iteratorError;
+	                            }
+	                        }
+	                    }
+
+	                    if (states.length > 0) results.push(key + "::=" + strings.join("|"));
+	                };
+
+	                for (var key in arr) {
+	                    _loop(key);
+	                }
+	            }
+	            return errors.length ? errors : results;
+	        }
+	    }, {
+	        key: 'getLeft',
+	        value: function getLeft(dataFromProps) {
+	            var _this2 = this;
+
+	            var reversedData = [];
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+
+	            try {
+	                for (var _iterator2 = dataFromProps[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var item = _step2.value;
+
+	                    reversedData.unshift(item);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+
+	            var arr = this.convertToAssociativeMassive(reversedData);
+	            var errors = [];
+	            var results = [];
+
+	            if (!this.checkEndPointExists(arr)) {
+	                errors.push(_react2.default.createElement(
+	                    'span',
+	                    { style: { color: "red" } },
+	                    '\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430 \u043A\u043E\u043D\u0435\u0447\u043D\u0430\u044F \u0442\u043E\u0447\u043A\u0430'
+	                ));
+	            } else {
+	                var lastEndPoint = this.getEndPoint(arr);
+	                var inputState = dataFromProps[0][0];
+	                for (var key in arr) {
+	                    // goind to all states (from end to begin)
+	                    // key - current state
+	                    if (key != inputState) {
+	                        (function () {
+	                            // if it is not start
+	                            var states = [];
+	                            var ends = [];
+	                            for (var key2 in arr) {
+	                                // so, search all our state in others
+	                                if (key2 != key) {
+	                                    // if it is not we =)
+	                                    // key2 - another state (row's key)
+	                                    for (var i = 0; i < 2; i++) {
+	                                        // go by all states in terminals 0 & 1
+	                                        // i - current terminal
+	                                        if (arr[key2][i] == key) {
+	                                            // add current terminal
+	                                            states.push([key2, i]);
+	                                            if (arr[key2]['end']) {
+	                                                // push end number if not exists already
+	                                                if (ends.indexOf(i) == -1) ends.push(i);
+	                                            }
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            // convert all ends line to str structure
+	                            ends.forEach(function (v) {
+	                                states.push(['', v]);
+	                            }, _this2);
+
+	                            // converts every elemnts ([number, terminal]) in states to string
+	                            var strings = [];
+	                            var _iteratorNormalCompletion3 = true;
+	                            var _didIteratorError3 = false;
+	                            var _iteratorError3 = undefined;
+
+	                            try {
+	                                for (var _iterator3 = states[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                                    var s = _step3.value;
+
+	                                    strings.push(s.join(""));
+	                                } // convert all array states to string
+	                            } catch (err) {
+	                                _didIteratorError3 = true;
+	                                _iteratorError3 = err;
+	                            } finally {
+	                                try {
+	                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                                        _iterator3.return();
+	                                    }
+	                                } finally {
+	                                    if (_didIteratorError3) {
+	                                        throw _iteratorError3;
+	                                    }
+	                                }
+	                            }
+
+	                            if (states.length > 0) results.push(key + "::=" + strings.join("|"));
+	                        })();
+	                    }
+	                }
+	            }
+
+	            return errors.length ? errors : results;
+	        }
+	    }]);
+
+	    return Grammar;
+	}();
+
+	exports.default = Grammar;
 
 /***/ }
 /******/ ]);

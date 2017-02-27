@@ -20,6 +20,5 @@ module.exports = {
     watch: true,
     watchOptions: {
         aggregateTimeout: 100
-    },
-    plugins: []
+    }
 };
