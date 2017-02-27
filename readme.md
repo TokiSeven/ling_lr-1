@@ -3,9 +3,12 @@ Lab work on 3 course of the university at discipline "Linguistic and software of
 # Subject
 Finite automata.
 # Description
-`First task:` Create a program for the construction of the right- and left- sided grammar for transition matrix.
-`Second task:` Build end recognizer program for the chosen language: the number of "1" - an even number and "0" - odd.
-`Third task:` Construct a finite automaton to recognize strings and error analysis, which are identifiers of a type in Fortran, starting with I, J, K, L, M Nю
+## First task
+Create a program for the construction of the right- and left- sided grammar for transition matrix.
+## Second task
+Build end recognizer program for the chosen language: the number of "1" - an even number and "0" - odd.
+## Third task
+Construct a finite automaton to recognize strings and error analysis, which are identifiers of a type in Fortran, starting with I, J, K, L, M Nю
 # How to start?
  - Download or clone this repository
  - Write and press Enter in console: npm install
