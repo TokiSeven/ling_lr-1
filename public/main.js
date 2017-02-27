@@ -58,13 +58,13 @@
 
 	var _reactBootstrap = __webpack_require__(159);
 
-	var _index = __webpack_require__(426);
+	var _task = __webpack_require__(426);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _task2 = _interopRequireDefault(_task);
 
-	var _index3 = __webpack_require__(427);
+	var _task3 = __webpack_require__(430);
 
-	var _index4 = _interopRequireDefault(_index3);
+	var _task4 = _interopRequireDefault(_task3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73,6 +73,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import Task3 from './task-3/';
 
 	var Page = function (_React$Component) {
 	    _inherits(Page, _React$Component);
@@ -120,20 +122,10 @@
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Row,
-	                    null,
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Col,
-	                        { xs: 6, sm: 6 },
-	                        _react2.default.createElement(_index2.default, { dataChangedHandler: this.dataChangedHandler })
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Col,
-	                        { xs: 6, sm: 6 },
-	                        _react2.default.createElement(_index4.default, { data: this.state.data })
-	                    )
-	                )
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(_task2.default, null),
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(_task4.default, null)
 	            );
 	        }
 	    }]);
@@ -39275,6 +39267,96 @@
 
 	var _reactBootstrap = __webpack_require__(159);
 
+	var _inputs = __webpack_require__(427);
+
+	var _inputs2 = _interopRequireDefault(_inputs);
+
+	var _outputs = __webpack_require__(428);
+
+	var _outputs2 = _interopRequireDefault(_outputs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Task1 = function (_React$Component) {
+	    _inherits(Task1, _React$Component);
+
+	    function Task1(props) {
+	        _classCallCheck(this, Task1);
+
+	        var _this = _possibleConstructorReturn(this, (Task1.__proto__ || Object.getPrototypeOf(Task1)).call(this, props));
+
+	        _this.state = {
+	            data: []
+	        };
+	        _this.dataChangedHandler = _this.dataChangedHandler.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Task1, [{
+	        key: 'dataChangedHandler',
+	        value: function dataChangedHandler(newData) {
+	            this.setState({
+	                data: newData
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 12, sm: 12, className: 'text-center' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        '\u0417\u0430\u0434\u0430\u043D\u0438\u0435 1'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 6, sm: 6 },
+	                    _react2.default.createElement(_inputs2.default, { dataChangedHandler: this.dataChangedHandler })
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 6, sm: 6 },
+	                    _react2.default.createElement(_outputs2.default, { data: this.state.data })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Task1;
+	}(_react2.default.Component);
+
+	exports.default = Task1;
+
+/***/ },
+/* 427 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(159);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39463,7 +39545,7 @@
 	exports.default = TableInputs;
 
 /***/ },
-/* 427 */
+/* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39480,7 +39562,7 @@
 
 	var _reactBootstrap = __webpack_require__(159);
 
-	var _Grammar = __webpack_require__(428);
+	var _Grammar = __webpack_require__(429);
 
 	var _Grammar2 = _interopRequireDefault(_Grammar);
 
@@ -39563,7 +39645,7 @@
 	exports.default = Outputs;
 
 /***/ },
-/* 428 */
+/* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39855,6 +39937,148 @@
 	}();
 
 	exports.default = Grammar;
+
+/***/ },
+/* 430 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Task1 = function (_React$Component) {
+	    _inherits(Task1, _React$Component);
+
+	    function Task1(props) {
+	        _classCallCheck(this, Task1);
+
+	        var _this = _possibleConstructorReturn(this, (Task1.__proto__ || Object.getPrototypeOf(Task1)).call(this, props));
+
+	        _this.state = {
+	            source: "",
+	            converted: "",
+	            result: ""
+	        };
+	        _this.changedHandler = _this.changedHandler.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Task1, [{
+	        key: 'changedHandler',
+	        value: function changedHandler(e) {
+	            var sourceValue = e.target.value;
+	            var convertedValue = sourceValue.match(/1|0/gi);
+
+	            if (sourceValue === convertedValue.join("")) {
+	                var been = {
+	                    "0": false,
+	                    "1": false
+	                };
+	                var bools = {
+	                    "0": false,
+	                    "1": false
+	                };
+	                convertedValue.forEach(function (v) {
+	                    bools[v] = !bools[v];
+	                    been[v] = true;
+	                }, this);
+
+	                var results = [];
+	                results.push(bools["0"] && been["0"] ? "Нули - прошли" : "Нули - не прошли");
+	                results.push(!bools["1"] && been["1"] ? "Еденицы - прошли" : "Еденицы - не прошли");
+	                results.push(!bools["1"] && bools["0"] && been["0"] && been["1"] ? "Итог - распознано" : "Итог - не распознано");
+
+	                this.setState({
+	                    source: sourceValue,
+	                    converted: convertedValue.join(", "),
+	                    result: results.join(". ")
+	                });
+	            } else {
+	                this.setState({
+	                    source: "",
+	                    converted: "",
+	                    result: ""
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var source = this.state.source.length > 0 ? this.state.source : "Нет входных данных";
+	            var converted = this.state.converted.length > 0 ? this.state.converted : "Нет отфильтрованных данных";
+	            var result = this.state.result.length > 0 ? this.state.result : "Нет выходных данных";
+
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 12, sm: 12, className: 'text-center' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        '\u0417\u0430\u0434\u0430\u043D\u0438\u0435 2'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        '\u0427\u0438\u0441\u043B\u043E "1" \u2013 \u0447\u0435\u0442\u043D\u043E\u0435 \u0438 \u0447\u0438\u0441\u043B\u043E "0" \u2013 \u043D\u0435\u0447\u0435\u0442\u043D\u043E\u0435.'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 6, sm: 6 },
+	                    _react2.default.createElement('input', { onChange: this.changedHandler, type: 'text', className: 'form-control' })
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 6, sm: 6 },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { className: 'list-group' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            source
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            converted
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            result
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Task1;
+	}(_react2.default.Component);
+
+	exports.default = Task1;
 
 /***/ }
 /******/ ]);
