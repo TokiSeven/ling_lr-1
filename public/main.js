@@ -40134,16 +40134,17 @@
 	                other: "abcdefghopqrstuvwxyzABCDEFGHOPQRSTUVWXYZ_1234567890"
 	            };
 
-	            var curr = [0, true];
-	            for (var i = 0; i < len && curr[1]; i++) {
-	                if (curr[0] == 0) // самый первый элемент - первое состояние
-	                    curr[1] = validations['first'].indexOf(value[i]) !== -1;else if (curr[0] < 9 && curr[0] > 0) // можем повторять 9 раз - 9 состяний (кроме первого)
-	                    curr[1] = validations['other'].indexOf(value[i]) !== -1 || validations['first'].indexOf(value[i]) !== -1;else // слишком много элементов - прыгаем в ошибку
-	                    curr[1] = false;
-	                curr[0] = i;
+	            var curr = 'a';
+	            // available: a, b, e
+	            for (var i = 0; i < len && curr != 'e'; i++) {
+	                if (curr == 'a') {
+	                    if (validations['first'].indexOf(value[i]) !== -1) curr = 'b';else curr = 'e';
+	                } else if (curr == 'b') {
+	                    if (validations['other'].indexOf(value[i]) !== -1 || validations['first'].indexOf(value[i]) !== -1) curr = 'b';else curr = 'e';
+	                }
 	            }
 
-	            if (curr[1]) res = 'Все корректно';else if (curr[0] < 9) res = 'Некорректный символ под номером ' + curr[0];else if (curr[0] >= 9) res = 'Слишком много элементов';
+	            if (curr != 'e') res = 'Все корректно';else res = 'Неправильный символ';
 
 	            this.setState({
 	                source: value,
