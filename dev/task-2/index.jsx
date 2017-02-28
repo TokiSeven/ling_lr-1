@@ -16,24 +16,26 @@ export default class Task2 extends React.Component{
         let sourceValue = e.target.value;
         let convertedValue = sourceValue.match(/1|0/gi);
 
-        if (sourceValue === convertedValue.join("")){
-            let been = {
-                "0": false,
-                "1": false
-            }
-            let bools = {
-                "0": false,
-                "1": false
+        if (sourceValue === convertedValue.join("") && sourceValue != ''){
+            let statements = {
+                b: [true, false], // 0 нечетный, 1 нечетная
+                c: [true, true], // 0 нечетный, 1 четная
+                d: [false, false], // 0 четный, 1 нечетная
+                e: [false, true] // 0 четный, 1 четная
             };
+            let curr = 'e';
             convertedValue.forEach(function(v) {
-                bools[v] = !bools[v];
-                been[v] = true;
+                if(curr == 'b') curr = (v == '1') ? 'c' : 'd';
+                else if(curr == 'c') curr = (v == '1') ? 'b' : 'e';
+                else if(curr == 'd') curr = (v == '1') ? 'e' : 'b';
+                else if(curr == 'e') curr = (v == '1') ? 'd' : 'c';
             }, this);
 
             let results = [];
-            results.push(bools["0"] && been["0"] ? "Нули - прошли" : "Нули - не прошли");
-            results.push(!bools["1"] && been["1"] ? "Еденицы - прошли" : "Еденицы - не прошли");
-            results.push(!bools["1"] && bools["0"] && been["0"] && been["1"] ? "Итог - распознано" : "Итог - не распознано")
+            results.push(statements[curr][0] ? "Нули - прошли" : "Нули - не прошли");
+            results.push(statements[curr][1] ? "Еденицы - прошли" : "Еденицы - не прошли");
+            results.push(statements[curr][0] && statements[curr][1] ? "Итог - распознано" : "Итог - не распознано")
+            results.push(curr);
 
             this.setState({
                 source: sourceValue,

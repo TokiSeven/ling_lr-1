@@ -36,6 +36,8 @@ class Page extends React.Component{
                 <Task2 />
                 <hr />
                 <Task3 />
+                <div style = {{marginBottom: "200px"}}>
+                </div>
             </Grid>
         );
     }
