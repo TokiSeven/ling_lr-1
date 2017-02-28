@@ -39869,68 +39869,64 @@
 	            } else {
 	                var lastEndPoint = this.getEndPoint(arr);
 	                var inputState = dataFromProps[0][0];
-	                for (var key in arr) {
+
+	                var _loop2 = function _loop2(key) {
 	                    // goind to all states (from end to begin)
 	                    // key - current state
-	                    if (key != inputState) {
-	                        (function () {
-	                            // if it is not start
-	                            var states = [];
-	                            var ends = [];
-	                            for (var key2 in arr) {
-	                                // so, search all our state in others
-	                                if (key2 != key) {
-	                                    // if it is not we =)
-	                                    // key2 - another state (row's key)
-	                                    for (var i = 0; i < 2; i++) {
-	                                        // go by all states in terminals 0 & 1
-	                                        // i - current terminal
-	                                        if (arr[key2][i] == key) {
-	                                            // add current terminal
-	                                            states.push([key2, i]);
-	                                            if (arr[key2]['end']) {
-	                                                // push end number if not exists already
-	                                                if (ends.indexOf(i) == -1) ends.push(i);
-	                                            }
-	                                        }
-	                                    }
+	                    var states = [];
+	                    var ends = [];
+	                    for (var key2 in arr) {
+	                        // so, search all our state in others
+	                        for (var i = 0; i < 2; i++) {
+	                            // go by all states in terminals 0 & 1
+	                            // i - current terminal
+	                            if (arr[key2][i] == key) {
+	                                // add current terminal
+	                                states.push([key2, i]);
+	                                if (arr[key2]['end']) {
+	                                    // push end number if not exists already
+	                                    if (ends.indexOf(i) == -1) ends.push(i);
 	                                }
 	                            }
-	                            // convert all ends line to str structure
-	                            ends.forEach(function (v) {
-	                                states.push(['', v]);
-	                            }, _this2);
-
-	                            // converts every elemnts ([number, terminal]) in states to string
-	                            var strings = [];
-	                            var _iteratorNormalCompletion3 = true;
-	                            var _didIteratorError3 = false;
-	                            var _iteratorError3 = undefined;
-
-	                            try {
-	                                for (var _iterator3 = states[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                                    var s = _step3.value;
-
-	                                    strings.push(s.join(""));
-	                                } // convert all array states to string
-	                            } catch (err) {
-	                                _didIteratorError3 = true;
-	                                _iteratorError3 = err;
-	                            } finally {
-	                                try {
-	                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                                        _iterator3.return();
-	                                    }
-	                                } finally {
-	                                    if (_didIteratorError3) {
-	                                        throw _iteratorError3;
-	                                    }
-	                                }
-	                            }
-
-	                            if (states.length > 0) results.push(key + "::=" + strings.join("|"));
-	                        })();
+	                        }
 	                    }
+	                    // convert all ends line to str structure
+	                    ends.forEach(function (v) {
+	                        states.push(['', v]);
+	                    }, _this2);
+
+	                    // converts every elemnts ([number, terminal]) in states to string
+	                    var strings = [];
+	                    var _iteratorNormalCompletion3 = true;
+	                    var _didIteratorError3 = false;
+	                    var _iteratorError3 = undefined;
+
+	                    try {
+	                        for (var _iterator3 = states[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                            var s = _step3.value;
+
+	                            strings.push(s.join(""));
+	                        } // convert all array states to string
+	                    } catch (err) {
+	                        _didIteratorError3 = true;
+	                        _iteratorError3 = err;
+	                    } finally {
+	                        try {
+	                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                                _iterator3.return();
+	                            }
+	                        } finally {
+	                            if (_didIteratorError3) {
+	                                throw _iteratorError3;
+	                            }
+	                        }
+	                    }
+
+	                    if (states.length > 0) results.push(key + "::=" + strings.join("|"));
+	                };
+
+	                for (var key in arr) {
+	                    _loop2(key);
 	                }
 	            }
 
@@ -40134,20 +40130,21 @@
 	            var res = "";
 
 	            var validations = {
-	                first: 'IJKLMNijklmn',
-	                other: '_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+	                first: "ijklmnIJKLMN",
+	                other: "abcdefghopqrstuvwxyzABCDEFGHOPQRSTUVWXYZ_1234567890"
 	            };
 
-	            if (len > 9 || len < 1) {
-	                res = "Длина должна быть в пределе 1 -> 9 символов.";
-	            } else {
-	                var positionOfIncorrectSymbol = -1;
-	                for (var i = 0; i < len && positionOfIncorrectSymbol == -1; i++) {
-	                    var field = i == 0 ? "first" : "other";
-	                    if (validations[field].indexOf(value[i]) === -1) positionOfIncorrectSymbol = i;
-	                }
-	                if (positionOfIncorrectSymbol == -1) res = "Строка корректна";else res = "Строка некорректна на позиции " + positionOfIncorrectSymbol + " (начало с нуля). Некорректный символ: " + value[positionOfIncorrectSymbol] + ".";
+	            var curr = [0, true];
+	            for (var i = 0; i < len && curr[1]; i++) {
+	                if (curr[0] == 0) // самый первый элемент - первое состояние
+	                    curr[1] = validations['first'].indexOf(value[i]) !== -1;else if (curr[0] < 9 && curr[0] > 0) // можем повторять 9 раз - 9 состяний (кроме первого)
+	                    curr[1] = validations['other'].indexOf(value[i]) !== -1 || validations['first'].indexOf(value[i]) !== -1;else // слишком много элементов - прыгаем в ошибку
+	                    curr[1] = false;
+	                curr[0] = i;
 	            }
+
+	            if (curr[1]) res = 'Все корректно';else if (curr[0] < 9) res = 'Некорректный символ под номером ' + curr[0];else if (curr[0] >= 9) res = 'Слишком много элементов';
+
 	            this.setState({
 	                source: value,
 	                result: res

@@ -123,44 +123,37 @@ export default class Grammar{
             for(let key in arr){
                 // goind to all states (from end to begin)
                 // key - current state
-                if (key != inputState){
-                    // if it is not start
-                    let states = [];
-                    let ends = [];
-                    for(let key2 in arr){
-                        // so, search all our state in others
-                        if (key2 != key){
-                            // if it is not we =)
-                            // key2 - another state (row's key)
-                            for(let i = 0; i < 2; i++){
-                                // go by all states in terminals 0 & 1
-                                // i - current terminal
-                                if (arr[key2][i] == key){
-                                    // add current terminal
-                                    states.push([key2, i]);
-                                    if (arr[key2]['end']){
-                                        // push end number if not exists already
-                                        if (ends.indexOf(i) == -1)
-                                            ends.push(i);
-                                    }
-                                }
+                let states = [];
+                let ends = [];
+                for(let key2 in arr){
+                    // so, search all our state in others
+                    for(let i = 0; i < 2; i++){
+                        // go by all states in terminals 0 & 1
+                        // i - current terminal
+                        if (arr[key2][i] == key){
+                            // add current terminal
+                            states.push([key2, i]);
+                            if (arr[key2]['end']){
+                                // push end number if not exists already
+                                if (ends.indexOf(i) == -1)
+                                    ends.push(i);
                             }
                         }
                     }
-                    // convert all ends line to str structure
-                    ends.forEach(function(v) {
-                        states.push(['', v]);
-                    }, this);
-
-                    // converts every elemnts ([number, terminal]) in states to string
-                    let strings = [];
-                    for(let s of states)
-                        strings.push(s.join(""));
-
-                    // convert all array states to string
-                    if (states.length > 0)
-                        results.push(key + "::=" + strings.join("|"));
                 }
+                // convert all ends line to str structure
+                ends.forEach(function(v) {
+                    states.push(['', v]);
+                }, this);
+
+                // converts every elemnts ([number, terminal]) in states to string
+                let strings = [];
+                for(let s of states)
+                    strings.push(s.join(""));
+
+                // convert all array states to string
+                if (states.length > 0)
+                    results.push(key + "::=" + strings.join("|"));
             }
         }
 

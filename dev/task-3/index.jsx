@@ -17,24 +17,25 @@ export default class Task3 extends React.Component{
         let res = "";
 
         let validations = {
-            first: 'IJKLMNijklmn',
-            other: '_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+            first: "ijklmnIJKLMN",
+            other: "abcdefghopqrstuvwxyzABCDEFGHOPQRSTUVWXYZ_1234567890"
         };
 
-        if (len > 9 || len < 1){
-            res = "Длина должна быть в пределе 1 -> 9 символов.";
-        }else{
-            let positionOfIncorrectSymbol = -1;
-            for(let i = 0; i < len && positionOfIncorrectSymbol == -1; i++){
-                let field = (i == 0) ? "first" : "other";
-                if (validations[field].indexOf(value[i]) === -1)
-                    positionOfIncorrectSymbol = i;
-            }
-            if (positionOfIncorrectSymbol == -1)
-                res = "Строка корректна";
-            else
-                res = "Строка некорректна на позиции " + positionOfIncorrectSymbol + " (начало с нуля). Некорректный символ: " + value[positionOfIncorrectSymbol] + ".";
+        let curr = [0, true];
+        for(let i = 0; i < len && curr[1]; i++){
+            if (curr[0] == 0) // самый первый элемент - первое состояние
+                curr[1] = (validations['first'].indexOf(value[i]) !== -1);
+            else if (curr[0] < 9 && curr[0] > 0) // можем повторять 9 раз - 9 состяний (кроме первого)
+                curr[1] = (validations['other'].indexOf(value[i]) !== -1 || validations['first'].indexOf(value[i]) !== -1);
+            else // слишком много элементов - прыгаем в ошибку
+                curr[1] = false;
+            curr[0] = i;
         }
+        
+        if (curr[1]) res = 'Все корректно';
+        else if (curr[0] < 9) res = 'Некорректный символ под номером ' + curr[0];
+        else if (curr[0] >= 9) res = 'Слишком много элементов';
+
         this.setState({
             source: value,
             result: res
