@@ -39826,10 +39826,55 @@
 	            return errors.length ? errors : results;
 	        }
 	    }, {
+	        key: 'getLeftItem',
+	        value: function getLeftItem(element, firstElement, data, result) {
+	            console.info("------------------------------");
+	            console.info("Current element: " + element);
+
+	            console.info("Current data:");
+	            console.info(data);
+
+	            console.info("Current result:");
+	            console.info(result);
+
+	            console.info("Starting....");
+
+	            if (!(element in result)) {
+	                var _states = [];
+	                var _ends = [];
+	                for (var key2 in data) {
+	                    // поиск текущего элемента среди всех остальных, key2 - имя текущего
+	                    for (var i = 0; i < 2; i++) {
+	                        // идем по треминалам 0 и 1, i - текущий терминал
+	                        if (data[key2][i] == element) {
+	                            // если мы попали на себя (нашли т.е.),
+	                            // то надо добавить текущий элемент в наше текущее 'состояние'
+	                            _states.push([key2, i]);
+	                            /*if (data[key2]['end']){
+	                                // а если это конечный элемент,
+	                                // то добавляем возможность выхода по нему
+	                                if (ends.indexOf(i) == -1)
+	                                    ends.push(i);
+	                            }*/
+	                            if (key2 == firstElement) _ends.push(i);
+	                        }
+	                    }
+	                }console.info("States: ");
+	                console.log(_states);
+	                result[element] = {
+	                    'states': _states,
+	                    'ends': _ends
+	                };
+	                _states.forEach(function (v) {
+	                    result = this.getLeftItem(v[0], firstElement, data, result);
+	                }, this);
+	            }
+
+	            return result;
+	        }
+	    }, {
 	        key: 'getLeft',
 	        value: function getLeft(dataFromProps) {
-	            var _this2 = this;
-
 	            var reversedData = [];
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
@@ -39867,66 +39912,29 @@
 	                    '\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430 \u043A\u043E\u043D\u0435\u0447\u043D\u0430\u044F \u0442\u043E\u0447\u043A\u0430'
 	                ));
 	            } else {
+	                var firstElement = dataFromProps[0][0];
 	                var lastEndPoint = this.getEndPoint(arr);
 	                var inputState = dataFromProps[0][0];
-
-	                var _loop2 = function _loop2(key) {
-	                    // goind to all states (from end to begin)
-	                    // key - current state
-	                    var states = [];
-	                    var ends = [];
-	                    for (var key2 in arr) {
-	                        // so, search all our state in others
-	                        for (var i = 0; i < 2; i++) {
-	                            // go by all states in terminals 0 & 1
-	                            // i - current terminal
-	                            if (arr[key2][i] == key) {
-	                                // add current terminal
-	                                states.push([key2, i]);
-	                                if (arr[key2]['end']) {
-	                                    // push end number if not exists already
-	                                    if (ends.indexOf(i) == -1) ends.push(i);
-	                                }
-	                            }
-	                        }
+	                console.info("________NEW_DATA________");
+	                var result = this.getLeftItem(lastEndPoint, firstElement, arr, []);
+	                console.info("------------------------------");
+	                console.info("Result:");
+	                console.log(result);
+	                // конвертирование результата в массив строк (A::=....)
+	                for (var key in result) {
+	                    // идем по всем найденным состояниям
+	                    var currStr = "";
+	                    if (result[key].states.length > 0) {
+	                        result[key].states.forEach(function (v, i, arr) {
+	                            arr[i] = v.join("");
+	                        });
+	                        currStr += result[key].states.join("|");
 	                    }
-	                    // convert all ends line to str structure
-	                    ends.forEach(function (v) {
-	                        states.push(['', v]);
-	                    }, _this2);
-
-	                    // converts every elemnts ([number, terminal]) in states to string
-	                    var strings = [];
-	                    var _iteratorNormalCompletion3 = true;
-	                    var _didIteratorError3 = false;
-	                    var _iteratorError3 = undefined;
-
-	                    try {
-	                        for (var _iterator3 = states[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                            var s = _step3.value;
-
-	                            strings.push(s.join(""));
-	                        } // convert all array states to string
-	                    } catch (err) {
-	                        _didIteratorError3 = true;
-	                        _iteratorError3 = err;
-	                    } finally {
-	                        try {
-	                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                                _iterator3.return();
-	                            }
-	                        } finally {
-	                            if (_didIteratorError3) {
-	                                throw _iteratorError3;
-	                            }
-	                        }
+	                    if (result[key].ends.length > 0) {
+	                        if (result[key].ends.indexOf(0) > -1) currStr += currStr == "" ? "0" : "|0";
+	                        if (result[key].ends.indexOf(1) > -1) currStr += currStr == "" ? "1" : "|1";
 	                    }
-
-	                    if (states.length > 0) results.push(key + "::=" + strings.join("|"));
-	                };
-
-	                for (var key in arr) {
-	                    _loop2(key);
+	                    if (currStr != '') results.push(key + "::=" + currStr);
 	                }
 	            }
 

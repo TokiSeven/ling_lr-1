@@ -102,6 +102,50 @@ export default class Grammar{
         return errors.length ? errors : results;
     }
 
+    getLeftItem(element, firstElement, data, result){
+        console.info("------------------------------");
+        console.info("Current element: " + element);
+
+        console.info("Current data:");
+        console.info(data);
+
+        console.info("Current result:");
+        console.info(result);
+
+        console.info("Starting....");
+
+        if (!(element in result)){
+            let states = [];
+            let ends = [];
+            for(let key2 in data) // поиск текущего элемента среди всех остальных, key2 - имя текущего
+                for(let i = 0; i < 2; i++) // идем по треминалам 0 и 1, i - текущий терминал
+                    if (data[key2][i] == element){
+                        // если мы попали на себя (нашли т.е.),
+                        // то надо добавить текущий элемент в наше текущее 'состояние'
+                        states.push([key2, i]);
+                        /*if (data[key2]['end']){
+                            // а если это конечный элемент,
+                            // то добавляем возможность выхода по нему
+                            if (ends.indexOf(i) == -1)
+                                ends.push(i);
+                        }*/
+                        if (key2 == firstElement)
+                            ends.push(i);
+                    }
+            console.info("States: ");
+            console.log(states);
+            result[element] = {
+                'states': states,
+                'ends': ends
+            };
+            states.forEach(function(v){
+                result = this.getLeftItem(v[0], firstElement, data, result);
+            }, this);
+        }
+
+        return result;
+    }
+
     getLeft(dataFromProps){
         let reversedData = [];
         for(let item of dataFromProps){
@@ -118,42 +162,32 @@ export default class Grammar{
                 </span>
             );
         }else{
+            let firstElement = dataFromProps[0][0];
             let lastEndPoint = this.getEndPoint(arr);
             let inputState = dataFromProps[0][0];
-            for(let key in arr){
-                // goind to all states (from end to begin)
-                // key - current state
-                let states = [];
-                let ends = [];
-                for(let key2 in arr){
-                    // so, search all our state in others
-                    for(let i = 0; i < 2; i++){
-                        // go by all states in terminals 0 & 1
-                        // i - current terminal
-                        if (arr[key2][i] == key){
-                            // add current terminal
-                            states.push([key2, i]);
-                            if (arr[key2]['end']){
-                                // push end number if not exists already
-                                if (ends.indexOf(i) == -1)
-                                    ends.push(i);
-                            }
-                        }
-                    }
+            console.info("________NEW_DATA________");
+            let result = this.getLeftItem(lastEndPoint, firstElement, arr, []);
+            console.info("------------------------------");
+            console.info("Result:");
+            console.log(result);
+            // конвертирование результата в массив строк (A::=....)
+            for(let key in result){
+                // идем по всем найденным состояниям
+                let currStr = "";
+                if (result[key].states.length > 0){
+                    result[key].states.forEach((v, i, arr) => {
+                        arr[i] = v.join("");
+                    });
+                    currStr += result[key].states.join("|");
                 }
-                // convert all ends line to str structure
-                ends.forEach(function(v) {
-                    states.push(['', v]);
-                }, this);
-
-                // converts every elemnts ([number, terminal]) in states to string
-                let strings = [];
-                for(let s of states)
-                    strings.push(s.join(""));
-
-                // convert all array states to string
-                if (states.length > 0)
-                    results.push(key + "::=" + strings.join("|"));
+                if (result[key].ends.length > 0){
+                    if (result[key].ends.indexOf(0) > -1)
+                        currStr += (currStr == "") ? "0" : "|0";
+                    if (result[key].ends.indexOf(1) > -1)
+                        currStr += (currStr == "") ? "1" : "|1";
+                }
+                if (currStr != '')
+                    results.push(key + "::=" + currStr);
             }
         }
 
